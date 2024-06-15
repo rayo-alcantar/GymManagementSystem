@@ -1,0 +1,53 @@
+﻿@model GymManagementSystem.Models.Member
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear Nuevo Miembro</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        @* Mostrar mensajes de validación generales *@
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
+
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" aria-label="Nombre" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" aria-label="Correo electrónico" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MembershipDate" class="control-label"></label>
+                <input asp-for="MembershipDate" class="form-control" type="date" aria-label="Fecha de membresía" />
+                <span asp-validation-for="MembershipDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <button class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Members")'">Back to List</button>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
