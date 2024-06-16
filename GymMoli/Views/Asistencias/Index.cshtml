@@ -1,0 +1,47 @@
+﻿@model IEnumerable<GymMoli.Models.Asistencias>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Clase)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha_Asistencia)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Clase.Día)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha_Asistencia)
+            </td>
+            <td>
+                <a class="btn btn-warning mx-1" asp-action="Edit" asp-route-id="@item.ID_Asistencia">Edit</a> |
+                <a class="btn btn-info mx-1" asp-action="Details" asp-route-id="@item.ID_Asistencia">Details</a> |
+                <a class="btn btn-danger mx-1" asp-action="Delete" asp-route-id="@item.ID_Asistencia">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,30 @@
+﻿@model GymMoli.Models.Clases_Entrenadores
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Clases_Entrenadores</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Clase)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Clase.Día)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Entrenador)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Entrenador.Apellido)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ID_Clase_Entrenador">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

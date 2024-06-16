@@ -1,0 +1,47 @@
+﻿@model IEnumerable<GymMoli.Models.Clientes>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="container">
+    <h1>Clientes</h1>
+
+    <p>
+        <a asp-action="Create" class="btn btn-success">Create New</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                <th>@Html.DisplayNameFor(model => model.Apellido)</th>
+                <th>@Html.DisplayNameFor(model => model.Fecha_Nacimiento)</th>
+                <th>@Html.DisplayNameFor(model => model.Género)</th>
+                <th>@Html.DisplayNameFor(model => model.Teléfono)</th>
+                <th>@Html.DisplayNameFor(model => model.Email)</th>
+                <th>@Html.DisplayNameFor(model => model.Fecha_Registro)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Apellido)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Fecha_Nacimiento)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Género)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Teléfono)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Fecha_Registro)</td>
+                    <td class="table-actions">
+                        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.ID_Cliente">Edit</a>
+                        <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.ID_Cliente">Details</a>
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.ID_Cliente">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

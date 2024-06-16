@@ -1,0 +1,59 @@
+﻿@model IEnumerable<GymMoli.Models.Inscripciones>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Membresía)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha_Inicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha_Fin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Membresía.Tipo_Membresía)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha_Inicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha_Fin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                <a class="btn btn-warning mx-1" asp-action="Edit" asp-route-id="@item.ID_Inscripción">Edit</a> |
+                <a class="btn btn-info mx-1" asp-action="Details" asp-route-id="@item.ID_Inscripción">Details</a> |
+                <a class="btn btn-danger mx-1" asp-action="Delete" asp-route-id="@item.ID_Inscripción">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
