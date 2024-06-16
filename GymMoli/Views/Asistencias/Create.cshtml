@@ -10,15 +10,27 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Debugging Information -->
+            @if (ViewBag.DebugInfo != null)
+            {
+                <div class="alert alert-info">
+                    <strong>Debug Info:</strong>
+                    <pre>@ViewBag.DebugInfo</pre>
+                </div>
+            }
+
             <div class="form-group">
                 <label asp-for="ID_Clase" class="control-label"></label>
-                <select asp-for="ID_Clase" class ="form-control" asp-items="ViewBag.ID_Clase"></select>
+                <select asp-for="ID_Clase" class="form-control" asp-items="ViewBag.ID_Clase"></select>
+                <span asp-validation-for="ID_Clase" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ID_Cliente" class="control-label"></label>
-                <select asp-for="ID_Cliente" class ="form-control" asp-items="ViewBag.ID_Cliente"></select>
+                <select asp-for="ID_Cliente" class="form-control" asp-items="ViewBag.ID_Cliente"></select>
+                <span asp-validation-for="ID_Cliente" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Fecha_Asistencia" class="control-label"></label>
@@ -28,6 +40,14 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+
+            <!-- Hidden fields for debugging -->
+            @if (Model != null)
+            {
+                <input type="hidden" name="Debug_ID_Clase" value="@Model.ID_Clase" />
+                <input type="hidden" name="Debug_ID_Cliente" value="@Model.ID_Cliente" />
+                <input type="hidden" name="Debug_Fecha_Asistencia" value="@Model.Fecha_Asistencia" />
+            }
         </form>
     </div>
 </div>
@@ -37,5 +57,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

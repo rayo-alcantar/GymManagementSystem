@@ -50,22 +50,35 @@ namespace GymMoli.Controllers
         {
             ViewData["ID_Clase"] = new SelectList(_context.Clases, "ID_Clase", "Día");
             ViewData["ID_Cliente"] = new SelectList(_context.Clientes, "ID_Cliente", "Apellido");
-            return View();
+            return View(new Asistencias()); // Asegurarse de pasar un nuevo modelo a la vista
         }
 
         // POST: Asistencias/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID_Asistencia,ID_Clase,ID_Cliente,Fecha_Asistencia")] Asistencias asistencias)
         {
+            // Agregar información de depuración
+            ViewBag.DebugInfo = $"ModelState.IsValid: {ModelState.IsValid}";
+
             if (ModelState.IsValid)
             {
-                _context.Add(asistencias);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(asistencias);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.DebugInfo += $"\nError: {ex.Message}\nStackTrace: {ex.StackTrace}";
+                }
             }
+            else
+            {
+                ViewBag.DebugInfo += "\nModelState is not valid. Errors: " + string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            }
+
             ViewData["ID_Clase"] = new SelectList(_context.Clases, "ID_Clase", "Día", asistencias.ID_Clase);
             ViewData["ID_Cliente"] = new SelectList(_context.Clientes, "ID_Cliente", "Apellido", asistencias.ID_Cliente);
             return View(asistencias);
@@ -90,8 +103,6 @@ namespace GymMoli.Controllers
         }
 
         // POST: Asistencias/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID_Asistencia,ID_Clase,ID_Cliente,Fecha_Asistencia")] Asistencias asistencias)
