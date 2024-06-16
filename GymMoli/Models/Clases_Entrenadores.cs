@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace GymMoli.Models
 {
     public class Clases_Entrenadores
@@ -12,13 +13,12 @@ namespace GymMoli.Models
         public int ID_Clase { get; set; }
 
         [ForeignKey("ID_Clase")]
-        public required Clases Clase { get; set; }
+        public Clases? Clase { get; set; } // Hacer opcional
 
         [Required]
-        public required int ID_Entrenador { get; set; }
+        public int ID_Entrenador { get; set; }
 
         [ForeignKey("ID_Entrenador")]
-        public required Entrenadores Entrenador { get; set; }
-        
+        public Entrenadores? Entrenador { get; set; } // Hacer opcional
     }
 }

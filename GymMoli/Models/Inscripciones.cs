@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace GymMoli.Models
 {
     public class Inscripciones
@@ -12,13 +13,13 @@ namespace GymMoli.Models
         public int ID_Cliente { get; set; }
 
         [ForeignKey("ID_Cliente")]
-        public required Clientes Cliente { get; set; }
+        public Clientes? Cliente { get; set; } // Hacer opcional
 
         [Required]
         public int ID_Membresía { get; set; }
 
         [ForeignKey("ID_Membresía")]
-        public required Membresias Membresía { get; set; }
+        public Membresias? Membresía { get; set; } // Hacer opcional
 
         [Required]
         public DateTime Fecha_Inicio { get; set; }
@@ -28,6 +29,13 @@ namespace GymMoli.Models
 
         [Required]
         [StringLength(20)]
-        public required string Estado { get; set; }
+        public string Estado { get; set; }
+
+        // Constructor sin parámetros
+        public Inscripciones()
+        {
+            Cliente = null;
+            Membresía = null;
+        }
     }
 }

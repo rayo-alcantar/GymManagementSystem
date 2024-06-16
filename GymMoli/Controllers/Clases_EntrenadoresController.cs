@@ -46,8 +46,9 @@ namespace GymMoli.Controllers
         // GET: Clases_Entrenadores/Create
         public IActionResult Create()
         {
-            // Remove the ViewData for ID_Clase and ID_Entrenador
-            return View();
+            ViewData["ID_Clase"] = new SelectList(_context.Clases, "ID_Clase", "Nombre_Clase");
+            ViewData["ID_Entrenador"] = new SelectList(_context.Entrenadores, "ID_Entrenador", "Nombre");
+            return View(new Clases_Entrenadores());
         }
 
         // POST: Clases_Entrenadores/Create
@@ -55,12 +56,29 @@ namespace GymMoli.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID_Clase_Entrenador,ID_Clase,ID_Entrenador")] Clases_Entrenadores clases_Entrenadores)
         {
+            // Agregar información de depuración
+            ViewBag.DebugInfo = $"ModelState.IsValid: {ModelState.IsValid}";
+
             if (ModelState.IsValid)
             {
-                _context.Add(clases_Entrenadores);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(clases_Entrenadores);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.DebugInfo += $"\nException: {ex.Message}";
+                }
             }
+            else
+            {
+                ViewBag.DebugInfo += "\nModelState is not valid. Errors: " + string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+            }
+
+            ViewData["ID_Clase"] = new SelectList(_context.Clases, "ID_Clase", "Nombre_Clase", clases_Entrenadores.ID_Clase);
+            ViewData["ID_Entrenador"] = new SelectList(_context.Entrenadores, "ID_Entrenador", "Nombre", clases_Entrenadores.ID_Entrenador);
             return View(clases_Entrenadores);
         }
 
@@ -77,7 +95,8 @@ namespace GymMoli.Controllers
             {
                 return NotFound();
             }
-            // Remove the ViewData for ID_Clase and ID_Entrenador
+            ViewData["ID_Clase"] = new SelectList(_context.Clases, "ID_Clase", "Nombre_Clase", clases_Entrenadores.ID_Clase);
+            ViewData["ID_Entrenador"] = new SelectList(_context.Entrenadores, "ID_Entrenador", "Nombre", clases_Entrenadores.ID_Entrenador);
             return View(clases_Entrenadores);
         }
 
@@ -111,6 +130,8 @@ namespace GymMoli.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ID_Clase"] = new SelectList(_context.Clases, "ID_Clase", "Nombre_Clase", clases_Entrenadores.ID_Clase);
+            ViewData["ID_Entrenador"] = new SelectList(_context.Entrenadores, "ID_Entrenador", "Nombre", clases_Entrenadores.ID_Entrenador);
             return View(clases_Entrenadores);
         }
 
